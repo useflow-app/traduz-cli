@@ -11,10 +11,12 @@
   "main": "src/index.js",
   "repository": "useflow-app/react-i18n-cli",
   "files": [
+    "/dist",
     "/bin",
-    "/src",
     "/npm-shrinkwrap.json",
-    "/oclif.manifest.json"
+    "/oclif.manifest.json",
+    "LICENSE",
+    "README.md"
   ],
   "dependencies": {
     "@oclif/core": "^1.16.4",
@@ -56,7 +58,8 @@
     "posttest": "yarn lint",
     "prepack": "yarn build && oclif manifest && oclif readme",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
-    "version": "oclif readme && git add README.md"
+    "version": "oclif readme && git add README.md",
+    "prepare": "shx rm -rf dist && tsc -b"
   },
   "engines": {
     "node": ">=12.0.0"
