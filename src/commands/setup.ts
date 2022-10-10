@@ -1,8 +1,8 @@
 import {Command, CliUx} from '@oclif/core';
 import {ConfigField, Config} from '../config';
 
-export default class Configure extends Command {
-    static description = 'configure i18n cli';
+export default class Setup extends Command {
+    static description = 'setup i18n cli';
 
     static examples = [
         '<%= config.bin %> <%= command.id %>',
@@ -18,7 +18,7 @@ export default class Configure extends Command {
     public async run(): Promise<void> {
         const config = new Config();
 
-        CliUx.ux.log("Let's configure this tool...");
+        CliUx.ux.log("Let's setup this tool...");
         await this.promptField('I18n Host', config.get(ConfigField.host, ''), config, ConfigField.host);
         await this.promptField('Application ID', config.get(ConfigField.app_id, ''), config, ConfigField.app_id);
         await this.promptField('Application Key', config.get(ConfigField.app_key, ''), config, ConfigField.app_key);
