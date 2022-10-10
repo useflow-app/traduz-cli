@@ -8,11 +8,11 @@
   },
   "homepage": "https://github.com/useflow-app/react-i18n-cli",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "repository": "useflow-app/react-i18n-cli",
   "files": [
     "/bin",
-    "/dist",
+    "/src",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
@@ -44,7 +44,7 @@
   "oclif": {
     "bin": "react-i18n-cli",
     "dirname": "react-i18n-cli",
-    "commands": "./dist/commands",
+    "commands": "./src/commands",
     "plugins": [],
     "topicSeparator": " ",
     "topics": {}
