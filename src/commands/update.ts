@@ -29,8 +29,9 @@ export default class Update extends Command {
         const Parser = require('i18next-scanner').Parser;
 
         CliUx.ux.action.start('parsing files *.js and *.jsx');
-        const files: Array<String> = glob.sync('src/**/*.{js,jsx}');
+        const files: Array<String> = glob.sync('src/**/*.{js,jsx,tsx}');
         const parser = new Parser();
+        console.log('parserStep!');
 
         const newStrings: Array<String> = [];
         let strings: any = config.get(ConfigField.strings, []);
