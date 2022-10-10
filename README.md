@@ -56,7 +56,7 @@ EXAMPLES
   Translation filename: language    # default name of translation files
 ```
 
-_See code: [dist/commands/hello/index.ts](https://github.com/useflow-app/react-i18n-cli/blob/main/src/commands/setup.ts)_
+_See code: [src/commands/setup.ts](https://github.com/useflow-app/react-i18n-cli/blob/main/src/commands/setup.ts)_
 
 ## `react-i18n-cli update`
 
@@ -84,6 +84,8 @@ EXAMPLES
   retrieving language pt-br... done
   retrieving language pt-pt... done
 ```
+
+_See code: [src/commands/update.ts](https://github.com/useflow-app/react-i18n-cli/blob/main/src/commands/update.ts)_
 
 ## `react-i18n-cli --help [COMMAND]`
 
