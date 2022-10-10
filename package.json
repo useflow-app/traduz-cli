@@ -19,7 +19,7 @@
   "dependencies": {
     "@oclif/core": "^1.16.4",
     "@oclif/plugin-help": "^5",
-    "@oclif/plugin-plugins": "^2.1.1",
+    "@oclif/plugin-plugins": "^2.1.2",
     "@types/conf": "^3.0.0",
     "axios": "^1.1.2",
     "conf": "^10.2.0",
