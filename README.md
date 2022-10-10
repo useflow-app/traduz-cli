@@ -13,6 +13,48 @@ CLI to handle the React strings translations
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+
+# Installation
+
+- Install minimum needed Node.JS version pointed on "engines" field on [package.json](https://github.com/useflow-app/react-i18n-cli/blob/main/package.json) in your system
+- If you use `yarn` as package manager (recommended):
+  - Run in your terminal the following command to install the package:
+  ```shell
+  $ yarn global add 'git+ssh://git@github.com/useflow-app/react-i18n-cli.git#main'
+  ```
+- Test if everything is working as intended, running the following command:
+  ```shell
+  $ react-i18n-cli
+  ```
+  - If your terminal can't find the command, make sure you are with yarn global binaries on your PATH:
+  ```shell
+  $ echo $PATH
+  ```
+  - To add yarn global binaries to your path:
+    - If you use ZSH:
+    ```shell
+    $ echo -n 'export PATH="$(yarn global bin):$PATH"' >> ~/.zshrc && source ~/.zshrc
+    ```
+    - If you use BASH:
+    ```shell
+    $ echo -n 'export PATH="$(yarn global bin):$PATH"' >> ~/.bashrc && source ~/.bashrc
+    ```
+- If you use `npm` as package manager:
+  - Make sure you are using an version <= 8.11.0, as newer versions have issues installing it.
+    - If you're using an newer version, you can downgrade it by running:
+    ```shell
+    $ npm install -g npm@8.11.0
+    ```
+  - Run in your terminal the following command to install the package:
+    ```shell
+    $ npm install -g 'git+ssh://git@github.com/useflow-app/react-i18n-cli.git#main'
+    ```
+  - Test if everything is working as intended, running the following command:
+    ```shell
+    $ react-i18n-cli
+    ``` 
+- It should show you the "help" with available commands ready to use :D
+
 # Usage
 <!-- usage -->
 ```sh-session
