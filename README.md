@@ -30,8 +30,8 @@ USAGE
 # Commands
 <!-- commands -->
 * [`react-i18n-cli setup`](#react-i18n-cli-setup)
-* [`react-i18n-cli update`](#react-i18n-cli-update-world)
-* [`react-i18n-cli --help [COMMAND]`](#react-i18n-cli-help-commmand)
+* [`react-i18n-cli update`](#react-i18n-cli-update)
+* [`react-i18n-cli --help [COMMAND]`](#react-i18n-cli---help-command)
 
 ## `react-i18n-cli setup`
 
