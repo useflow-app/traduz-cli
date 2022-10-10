@@ -25,13 +25,12 @@ export default class Update extends Command {
         reset: Flags.boolean({char: 'r', description: 'reset local translations'}),
     };
 
-    private parserStep(config: Config, force: boolean, ): Array<String> {
+    private parserStep(config: Config, force: boolean): Array<String> {
         const Parser = require('i18next-scanner').Parser;
 
         CliUx.ux.action.start('parsing files *.js and *.jsx');
         const files: Array<String> = glob.sync('src/**/*.{js,jsx,tsx}');
         const parser = new Parser();
-        console.log('parserStep!');
 
         const newStrings: Array<String> = [];
         let strings: any = config.get(ConfigField.strings, []);
@@ -47,12 +46,14 @@ export default class Update extends Command {
                 if (!strings.includes(element)) {
                     strings.push(element);
                     newStrings.push(element);
+                } else if (force && !newStrings.includes(element)) {
+                    newStrings.push(element);
                 }
             }
         });
 
         CliUx.ux.action.stop();
-        return force ? strings : newStrings;
+        return newStrings;
     }
 
     private prepareDataToSend(stringsToSend: Array<String>): Array<Object> {
@@ -79,7 +80,7 @@ export default class Update extends Command {
         return data;
     }
 
-    private async sendStep(config: Config, stringsToSend: Array<String>,) {
+    private async sendStep(config: Config, stringsToSend: Array<String>, force: boolean) {
         const axios = require('axios');
 
         CliUx.ux.action.start('sending new strings');
@@ -95,7 +96,7 @@ export default class Update extends Command {
         ).then(async (response: any) => {
             const strings = config.get(ConfigField.strings, []);
             strings.push(...stringsToSend);
-            config.set(ConfigField.strings, strings);
+            config.set(ConfigField.strings, force ? stringsToSend : strings);
             CliUx.ux.action.stop();
         }).catch(function (error: any) {
             CliUx.ux.error(error);
@@ -170,7 +171,7 @@ export default class Update extends Command {
         if (config.isValid()) {
             const newStrings = this.parserStep(config, flags.force);
             if (newStrings.length > 0) {
-                await this.sendStep(config, newStrings);
+                await this.sendStep(config, newStrings, flags.force);
             }
             const langs = await this.retrieveLangsStep(config, flags.reset);
             if (langs != null) {
