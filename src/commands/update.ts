@@ -21,10 +21,11 @@ export default class Update extends Command {
     ];
 
     static flags = {
-        verbose: Flags.boolean({char: 'v', description: 'enable verbose mode'}),
+        force: Flags.boolean({char: 'f', description: 'force send all strings'}),
+        reset: Flags.boolean({char: 'r', description: 'reset local translations'}),
     };
 
-    private parserStep(config: Config, verbose: boolean): Array<String> {
+    private parserStep(config: Config, force: boolean, ): Array<String> {
         const Parser = require('i18next-scanner').Parser;
 
         CliUx.ux.action.start('parsing files *.js and *.jsx');
@@ -50,7 +51,7 @@ export default class Update extends Command {
         });
 
         CliUx.ux.action.stop();
-        return newStrings;
+        return force ? strings : newStrings;
     }
 
     private prepareDataToSend(stringsToSend: Array<String>): Array<Object> {
@@ -77,7 +78,7 @@ export default class Update extends Command {
         return data;
     }
 
-    private async sendStep(config: Config, stringsToSend: Array<String>, verbose: boolean) {
+    private async sendStep(config: Config, stringsToSend: Array<String>,) {
         const axios = require('axios');
 
         CliUx.ux.action.start('sending new strings');
@@ -101,7 +102,7 @@ export default class Update extends Command {
         });
     }
 
-    private async retrieveLangStep(config: Config, verbose: boolean, lang: LangResponse) {
+    private async retrieveLangStep(config: Config, lang: LangResponse) {
         const axios = require('axios');
         const dir = `${config.get(ConfigField.trans_path)}/${lang.code}`;
         const filename = config.get(ConfigField.trans_filename);
@@ -134,12 +135,15 @@ export default class Update extends Command {
         CliUx.ux.action.stop();
     }
 
-    private async retrieveLangsStep(config: Config, verbose: boolean): Promise<[LangResponse] | null> {
+    private async retrieveLangsStep(config: Config, reset: boolean): Promise<[LangResponse] | null> {
         const axios = require('axios');
         let langs = null;
 
         CliUx.ux.action.start('retrieving languages available');
-
+        if (reset) {
+            const dir = config.get(ConfigField.trans_path);
+            fs.rmSync(dir, {recursive: true, force: true});
+        }
         await axios.get(
             config.get(ConfigField.host) + '/api/v1/react/langs/', {
                 auth: {
@@ -163,14 +167,14 @@ export default class Update extends Command {
         const config = new Config();
 
         if (config.isValid()) {
-            const newStrings = this.parserStep(config, flags.verbose);
+            const newStrings = this.parserStep(config, flags.force);
             if (newStrings.length > 0) {
-                await this.sendStep(config, newStrings, flags.verbose);
+                await this.sendStep(config, newStrings);
             }
-            const langs = await this.retrieveLangsStep(config, flags.verbose);
+            const langs = await this.retrieveLangsStep(config, flags.reset);
             if (langs != null) {
                 for (let lang of langs) {
-                    await this.retrieveLangStep(config, flags.verbose, lang);
+                    await this.retrieveLangStep(config, lang);
                 }
             }
         } else {
@@ -178,7 +182,7 @@ export default class Update extends Command {
             CliUx.ux.log('                @ )====// .\\___');
             CliUx.ux.log('                \\#\\_\\__(_/_\\\\_/');
             CliUx.ux.log('                  / /       \\\\');
-            CliUx.ux.error('Hold on, little grasshopper!\nYou need configure this tool before.');
+            CliUx.ux.error('Hold on, little grasshopper!\n  You need setup this tool before');
         }
     }
 }
