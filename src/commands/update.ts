@@ -44,7 +44,6 @@ export default class Update extends Command {
         Object.keys(translation).forEach((element: any) => {
             const t = typeof translation[element];
             if (t == 'string' || (t == 'object' && element.constructor.name === 'String')) {
-                console.log(element);
                 if (!strings.includes(element)) {
                     strings.push(element);
                     newStrings.push(element);
