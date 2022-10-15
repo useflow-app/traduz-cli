@@ -28,7 +28,7 @@ export default class Update extends Command {
     private parserStep(config: Config, force: boolean): Array<String> {
         const Parser = require('i18next-scanner').Parser;
 
-        CliUx.ux.action.start('parsing files *.js and *.jsx');
+        CliUx.ux.action.start('parsing files *.js, *.jsx and *.tsx');
         const files: Array<String> = glob.sync('src/**/*.{js,jsx,tsx}');
         const parser = new Parser();
 
@@ -42,7 +42,9 @@ export default class Update extends Command {
         })
         const translation = parser.get().en.translation
         Object.keys(translation).forEach((element: any) => {
-            if (typeof translation[element] == 'string') {
+            const t = typeof translation[element];
+            if (t == 'string' || (t == 'object' && element.constructor.name === 'String')) {
+                console.log(element);
                 if (!strings.includes(element)) {
                     strings.push(element);
                     newStrings.push(element);
