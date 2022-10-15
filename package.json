@@ -19,7 +19,7 @@
     "README.md"
   ],
   "dependencies": {
-    "@oclif/core": "^1.16.4",
+    "@oclif/core": "^1.18.0",
     "@oclif/plugin-help": "^5",
     "@oclif/plugin-plugins": "^2.1.1",
     "@types/conf": "^3.0.0",
