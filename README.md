@@ -1,4 +1,4 @@
-react-i18n-cli
+traduz-cli
 ==============
 
 CLI to handle the React strings translations
@@ -7,7 +7,7 @@ CLI to handle the React strings translations
 [![Version](https://img.shields.io/npm/v/oclif-hello-world.svg)](https://npmjs.org/package/oclif-hello-world)
 [![CircleCI](https://circleci.com/gh/oclif/hello-world/tree/main.svg?style=shield)](https://circleci.com/gh/oclif/hello-world/tree/main)
 [![Downloads/week](https://img.shields.io/npm/dw/oclif-hello-world.svg)](https://npmjs.org/package/oclif-hello-world)
-[![License](https://img.shields.io/npm/l/oclif-hello-world.svg)](https://github.com/useflow-app/react-i18n-cli/blob/main/package.json)
+[![License](https://img.shields.io/npm/l/oclif-hello-world.svg)](https://github.com/useflow-app/traduz-cli/blob/main/package.json)
 
 <!-- toc -->
 * [Usage](#usage)
@@ -16,15 +16,15 @@ CLI to handle the React strings translations
 
 # Installation
 
-- Install minimum needed Node.JS version pointed on "engines" field on [package.json](https://github.com/useflow-app/react-i18n-cli/blob/main/package.json) in your system
+- Install minimum needed Node.JS version pointed on "engines" field on [package.json](https://github.com/useflow-app/traduz-cli/blob/main/package.json) in your system
 - If you use `yarn` as package manager (recommended):
   - Run in your terminal the following command to install the package:
   ```shell
-  yarn global add 'git+ssh://git@github.com/useflow-app/react-i18n-cli.git#main'
+  yarn global add 'git+ssh://git@github.com/useflow-app/traduz-cli.git#main'
   ```
 - Test if everything is working as intended, running the following command:
   ```shell
-  react-i18n-cli
+  traduz-cli
   ```
   - If your terminal can't find the command, make sure you are with yarn global binaries on your PATH:
   ```shell
@@ -47,41 +47,41 @@ CLI to handle the React strings translations
     ```
   - Run in your terminal the following command to install the package:
     ```shell
-    npm install -g 'git+ssh://git@github.com/useflow-app/react-i18n-cli.git#main'
+    npm install -g 'git+ssh://git@github.com/useflow-app/traduz-cli.git#main'
     ```
   - Test if everything is working as intended, running the following command:
     ```shell
-    react-i18n-cli
-    ``` 
+    traduz-cli
+    ```
 - It should show you the "help" with available commands ready to use :D
 
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g react-i18n-cli
-$ react-i18n-cli COMMAND
+$ npm install -g traduz-cli
+$ traduz-cli COMMAND
 running command...
-$ react-i18n-cli (--version)
-react-i18n-cli/0.1.0 linux-x64 node-v14.17.6
-$ react-i18n-cli --help [COMMAND]
+$ traduz-cli (--version)
+traduz-cli/0.1.0 linux-x64 node-v14.17.6
+$ traduz-cli --help [COMMAND]
 USAGE
-  $ react-i18n-cli COMMAND
+  $ traduz-cli COMMAND
 ...
 ```
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`react-i18n-cli setup`](#react-i18n-cli-setup)
-* [`react-i18n-cli update`](#react-i18n-cli-update)
-* [`react-i18n-cli --help [COMMAND]`](#react-i18n-cli---help-command)
+* [`traduz-cli setup`](#traduz-cli-setup)
+* [`traduz-cli update`](#traduz-cli-update)
+* [`traduz-cli --help [COMMAND]`](#traduz-cli---help-command)
 
-## `react-i18n-cli setup`
+## `traduz-cli setup`
 
 Setup i18n CLI
 
 ```
 USAGE
-  $ react-i18n-cli setup
+  $ traduz-cli setup
 
 DESCRIPTION
   Setup i18n CLI.
@@ -89,7 +89,7 @@ DESCRIPTION
   The parameters are stored in the react-i18n-config.json file in the same path where this command is run.
 
 EXAMPLES
-  $ react-i18n-cli setup
+  $ traduz-cli setup
   Let's setup this tool...
   I18n Host: http://localhost:8000  # ms-i18n host
   Application ID: 123456789         # ms-auth app id
@@ -98,15 +98,15 @@ EXAMPLES
   Translation filename: language    # default name of translation files
 ```
 
-_See code: [src/commands/setup.ts](https://github.com/useflow-app/react-i18n-cli/blob/main/src/commands/setup.ts)_
+_See code: [src/commands/setup.ts](https://github.com/useflow-app/traduz-cli/blob/main/src/commands/setup.ts)_
 
-## `react-i18n-cli update`
+## `traduz-cli update`
 
 Update supported languages
 
 ```
 USAGE
-  $ react-i18n-cli update
+  $ traduz-cli update
 
 DESCRIPTION
   Update supported languages and save in local storage.
@@ -117,7 +117,7 @@ FLAGS
   -r, --reset  reset local translations
 
 EXAMPLES
-  $ react-i18n-cli update
+  $ traduz-cli update
   parsing files *.js and *.jsx... done
   sending new strings... done
   retrieving languages available... done
@@ -127,20 +127,20 @@ EXAMPLES
   retrieving language pt-pt... done
 ```
 
-_See code: [src/commands/update.ts](https://github.com/useflow-app/react-i18n-cli/blob/main/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/useflow-app/traduz-cli/blob/main/src/commands/update.ts)_
 
-## `react-i18n-cli --help [COMMAND]`
+## `traduz-cli --help [COMMAND]`
 
-Display help for react-i18n-cli.
+Display help for traduz-cli.
 
 ```
 USAGE
-  $ react-i18n-cli --help [COMMAND]
+  $ traduz-cli --help [COMMAND]
 
 ARGUMENTS
   COMMAND  Command to show help for.
 
 DESCRIPTION
-  Display help for react-i18n-cli.
+  Display help for traduz-cli.
 ```
 <!-- commandsstop -->

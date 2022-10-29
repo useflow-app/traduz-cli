@@ -1,7 +1,7 @@
 import Conf  from 'conf';
-import * as fs from 'fs';
 
 export enum ConfigField {
+    stack = 'stack',
     host = 'host',
     app_id = 'app_id',
     app_key = 'app_key',
@@ -12,7 +12,7 @@ export enum ConfigField {
 
 export class Config {
 
-    private static configuration: Conf = new Conf({cwd: './', configName: 'react-i18n-config'});
+    private static configuration: Conf = new Conf({cwd: './', configName: 'traduz-config'});
 
     public isValid(): boolean {
         let is_valid = true;
@@ -22,7 +22,24 @@ export class Config {
         return is_valid;
     }
 
-    private validate_host(value: string): string | null {
+    public validateHost(value: string): string | boolean {
+        let host = null
+        try {
+            new URL(value);
+            host = value;
+            if (host[host.length-1] == '/') {
+                host = host.substring(0, host.length - 1);
+            }
+        } catch {
+            // None
+        }
+        if (!host) {
+            return 'Please enter a valid URL';
+        }
+        return true;
+    }
+
+    private clearHost(value: string): string | null {
         let host = null
         try {
             new URL(value);
@@ -36,7 +53,14 @@ export class Config {
         return host;
     }
 
-    private validate_trans_path(value: string): string | null {
+    public validateRequired(value: string): string | boolean {
+        if (!value) {
+            return 'Please enter a value';
+        }
+        return true;
+    }
+
+    public clearTransPath(value: string): string | null {
         let path = value;
         if (path[path.length-1] == '/') {
             path = path.substring(0, path.length - 1);
@@ -44,20 +68,20 @@ export class Config {
         return path;
     }
 
-    private validate(field: ConfigField, value: string): string | null {
-        const validate: { [K: string]: Function } = {
-            host: this.validate_host,
-            trans_path: this.validate_trans_path
+    private clearField(field: ConfigField, value: string): string | null {
+        const clear: { [K: string]: Function } = {
+            host: this.clearHost,
+            trans_path: this.clearTransPath
         };
 
-        if (validate[field.toString()]) {
-            return validate[field.toString()](value);
+        if (clear[field.toString()]) {
+            return clear[field.toString()](value);
         }
         return value;
     }
 
     public set(field: ConfigField, value: any): boolean {
-        value = this.validate(field, value);
+        value = this.clearField(field, value);
         if (value != null) {
             Config.configuration.set(field.toString(), value);
         }
@@ -65,7 +89,8 @@ export class Config {
     }
 
     public get(field: ConfigField, defaultValue: any = null): any {
-        return Config.configuration.get(field.toString(), defaultValue);
+        const value = Config.configuration.get(field.toString(), defaultValue);
+        return value != '' ? value : null;
     }
 
     public has(field: ConfigField): boolean {

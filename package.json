@@ -1,15 +1,15 @@
 {
-  "name": "react-i18n-cli",
+  "name": "traduz-cli",
   "version": "0.1.0",
   "description": "CLI to handle the React strings translations",
   "author": "Eduardo Carneiro",
   "bin": {
-    "react-i18n-cli": "./bin/run"
+    "traduz-cli": "./bin/run"
   },
-  "homepage": "https://github.com/useflow-app/react-i18n-cli",
+  "homepage": "https://github.com/useflow-app/traduz-cli",
   "license": "MIT",
   "main": "dist/index.js",
-  "repository": "useflow-app/react-i18n-cli",
+  "repository": "useflow-app/traduz-cli",
   "files": [
     "/dist",
     "/bin",
@@ -23,9 +23,11 @@
     "@oclif/plugin-help": "^5",
     "@oclif/plugin-plugins": "^2.1.1",
     "@types/conf": "^3.0.0",
+    "@types/inquirer": "^9.0.2",
     "axios": "^1.1.2",
     "conf": "^10.2.0",
-    "i18next-scanner": "^4.0.0"
+    "i18next-scanner": "^4.0.0",
+    "inquirer": "^8.2.5"
   },
   "devDependencies": {
     "@oclif/test": "^2.2.2",
@@ -44,8 +46,8 @@
     "typescript": "^4.8.4"
   },
   "oclif": {
-    "bin": "react-i18n-cli",
-    "dirname": "react-i18n-cli",
+    "bin": "traduz-cli",
+    "dirname": "traduz-cli",
     "commands": "./dist/commands",
     "plugins": [],
     "topicSeparator": " ",
@@ -64,7 +66,7 @@
   "engines": {
     "node": ">=12.0.0"
   },
-  "bugs": "https://github.com/useflow-app/react-i18n-cli/issues",
+  "bugs": "https://github.com/useflow-app/traduz-cli/issues",
   "keywords": [
     "oclif"
   ],
