@@ -1,7 +1,7 @@
 traduz-cli
 ==============
 
-CLI to handle the React strings translations
+CLI to handle strings translations
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/oclif-hello-world.svg)](https://npmjs.org/package/oclif-hello-world)

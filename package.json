@@ -1,7 +1,7 @@
 {
   "name": "traduz-cli",
   "version": "0.1.0",
-  "description": "CLI to handle the React strings translations",
+  "description": "CLI to handle strings translations",
   "author": "Eduardo Carneiro",
   "bin": {
     "traduz-cli": "./bin/run"
