@@ -86,7 +86,7 @@ USAGE
 DESCRIPTION
   Setup i18n CLI.
   You must run this command before update.
-  The parameters are stored in the react-i18n-config.json file in the same path where this command is run.
+  The parameters are stored in the traduz-config.json file in the same path where this command is run.
 
 EXAMPLES
   $ traduz-cli setup
