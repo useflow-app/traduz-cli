@@ -22,9 +22,9 @@ export default class Update extends Command {
 
         if (config.isValid()) {
             const stack = config.get(ConfigField.stack);
-            if (stack == 'react') {
+            if (stack === 'react') {
                 await new ReactUpdate().update(config, flags)
-            } else if (stack == 'django') {
+            } else if (stack === 'django') {
                 await new DjangoUpdate().update(config, flags)
             }
         } else {

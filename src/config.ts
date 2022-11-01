@@ -27,7 +27,7 @@ export class Config {
         try {
             new URL(value);
             host = value;
-            if (host[host.length-1] == '/') {
+            if (host[host.length-1] === '/') {
                 host = host.substring(0, host.length - 1);
             }
         } catch {
@@ -44,7 +44,7 @@ export class Config {
         try {
             new URL(value);
             host = value;
-            if (host[host.length-1] == '/') {
+            if (host[host.length-1] === '/') {
                 host = host.substring(0, host.length - 1);
             }
         } catch {
@@ -62,7 +62,7 @@ export class Config {
 
     public clearTransPath(value: string): string | null {
         let path = value;
-        if (path[path.length-1] == '/') {
+        if (path[path.length-1] === '/') {
             path = path.substring(0, path.length - 1);
         }
         return path;
@@ -82,15 +82,15 @@ export class Config {
 
     public set(field: ConfigField, value: any): boolean {
         value = this.clearField(field, value);
-        if (value != null) {
+        if (value !== null) {
             Config.configuration.set(field.toString(), value);
         }
-        return value != null;
+        return value !== null;
     }
 
     public get(field: ConfigField, defaultValue: any = null): any {
         const value = Config.configuration.get(field.toString(), defaultValue);
-        return value != '' ? value : null;
+        return value !== '' ? value : null;
     }
 
     public has(field: ConfigField): boolean {

@@ -80,7 +80,7 @@ export default class DjangoUpdate {
                     translation[key] = {'plural': keyPlural};
                 }
             } else if (msgid) {
-                if (msgidPlural == null) {
+                if (msgidPlural === null) {
                     msgid = `${msgid}\n${line}`;
                 } else {
                     msgidPlural = `${msgidPlural}\n${line}`;
@@ -137,7 +137,7 @@ export default class DjangoUpdate {
                 data.push({
                     text: key,
                     text_plural: plural,
-                    plural: plural != null,
+                    plural: plural !== null,
                     module: app
                 });
             });
@@ -149,7 +149,7 @@ export default class DjangoUpdate {
     private mergeRecursive(obj1: any, obj2: any): Object {
         for (let p in obj2) {
           try {
-            if (obj2[p].constructor == Object) {
+            if (obj2[p].constructor === Object) {
               obj1[p] = this.mergeRecursive(obj1[p], obj2[p]);
             } else {
               obj1[p] = obj2[p];
@@ -194,7 +194,7 @@ export default class DjangoUpdate {
         let code = lang.code;
         if (code.includes('-')) {
             const parts = code.split('-');
-            if (parts.length == 2) {
+            if (parts.length === 2) {
                 code = `${parts[0]}_${parts[0].toUpperCase()}`
             }
         }
@@ -267,7 +267,7 @@ export default class DjangoUpdate {
         const newStrings = await this.parserStep(config, flags.force);
         await this.sendStep(config, newStrings, flags.force);
         const langs = await this.retrieveLangsStep(config, flags.reset);
-        if (langs != null) {
+        if (langs !== null) {
             const apps = config.get(ConfigField.strings, {});
             for (let lang of langs) {
                 for (let app of Object.keys(apps)) {

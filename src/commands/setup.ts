@@ -17,7 +17,7 @@ export default class Setup extends Command {
                 name: 'stack',
                 message: 'Select a stack',
                 type: 'list',
-                choices: config.get(ConfigField.stack, '') == 'react' ? ['react', 'django'] : ['django', 'react'],
+                choices: config.get(ConfigField.stack, '') === 'react' ? ['react', 'django'] : ['django', 'react'],
             },
             {
                 type: 'input',
@@ -65,7 +65,7 @@ export default class Setup extends Command {
         config.set(ConfigField.host, responses.host);
         config.set(ConfigField.app_id, responses.app_id);
         config.set(ConfigField.app_key, responses.app_key);
-        if (responses.stack == 'react') {
+        if (responses.stack === 'react') {
             const reactResponses = await inquirer.prompt(reactQuestions);
             config.set(ConfigField.trans_path, reactResponses.trans_path);
             config.set(ConfigField.trans_filename, reactResponses.trans_filename);

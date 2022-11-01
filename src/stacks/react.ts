@@ -32,7 +32,7 @@ export default class ReactUpdate {
         const translation = parser.get().en.translation;
         Object.keys(translation).forEach((element: any) => {
             const t = typeof translation[element];
-            if (t == 'string' || (t == 'object' && element.constructor.name === 'String')) {
+            if (t === 'string' || (t === 'object' && element.constructor.name === 'String')) {
                 if (!strings.includes(element)) {
                     strings.push(element);
                     newStrings.push(element);
@@ -60,7 +60,7 @@ export default class ReactUpdate {
                 keys.push(key);
             } else if (plural) {
                 for (let el of data) {
-                    if (el.text == key) {
+                    if (el.text === key) {
                         el.plural = plural;
                         break;
                     }
@@ -159,7 +159,7 @@ export default class ReactUpdate {
             await this.sendStep(config, newStrings, flags.force);
         }
         const langs = await this.retrieveLangsStep(config, flags.reset);
-        if (langs != null) {
+        if (langs !== null) {
             for (let lang of langs) {
                 await this.retrieveLangStep(config, lang);
             }
