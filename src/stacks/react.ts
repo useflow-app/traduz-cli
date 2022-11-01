@@ -17,8 +17,8 @@ export default class ReactUpdate {
     private parserStep(config: Config, force: boolean): Array<string> {
         const Parser = require('i18next-scanner').Parser;
 
-        CliUx.ux.action.start('parsing files *.js, *.jsx and *.tsx');
-        const files: Array<string> = glob.sync('src/**/*.{js,jsx,tsx}');
+        CliUx.ux.action.start('parsing files *.js, *.jsx, *.ts and *.tsx');
+        const files: Array<string> = glob.sync('src/**/*.{js,jsx,ts,tsx}');
         const parser = new Parser();
 
         const newStrings: Array<string> = [];
