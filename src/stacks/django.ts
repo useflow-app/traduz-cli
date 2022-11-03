@@ -191,14 +191,7 @@ export default class DjangoUpdate {
         const axios = require('axios');
         const chalk = require('chalk');
 
-        let code = lang.code;
-        if (code.includes('-')) {
-            const parts = code.split('-');
-            if (parts.length === 2) {
-                code = `${parts[0]}_${parts[0].toUpperCase()}`
-            }
-        }
-
+        const code = this.convertCode(lang.code);
         const dir = `${app}/locale/${code}/LC_MESSAGES`;
         const filename = 'django'
 
@@ -229,15 +222,21 @@ export default class DjangoUpdate {
         CliUx.ux.action.stop();
     }
 
+    private convertCode(code: string): string {
+        if (code.includes('-')) {
+            const parts = code.split('-');
+            if (parts.length === 2) {
+                code = `${parts[0]}_${parts[0].toUpperCase()}`
+            }
+        }
+        return code;
+    }
+
     private async retrieveLangsStep(config: Config, reset: boolean): Promise<[LangResponse] | null> {
         const axios = require('axios');
-        let langs = null;
+        let langs: any = null;
 
         CliUx.ux.action.start('retrieving languages available');
-        if (reset) {
-            const dir = config.get(ConfigField.trans_path);
-            fs.rmSync(dir, {recursive: true, force: true});
-        }
         await axios.get(
             config.get(ConfigField.host) + '/api/v1/django/langs/', {
                 auth: {
@@ -251,6 +250,17 @@ export default class DjangoUpdate {
         }).catch(function (error: any) {
             CliUx.ux.error(error);
         });
+
+        if (reset && langs !== null) {
+            const apps = config.get(ConfigField.strings, {});
+            for (let app of Object.keys(apps)) {
+                for (let lang of langs) {
+                    const code = this.convertCode(lang.code);
+                    const dir = `${app}/locale/${code}/LC_MESSAGES`;
+                    fs.rmSync(dir, {recursive: true, force: true});
+                }
+            }
+        }
 
         return langs;
     }
