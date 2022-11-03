@@ -107,7 +107,7 @@ export default class DjangoUpdate {
 
         this.checkIfCommandExists();
         CliUx.ux.action.start('generating messages');
-        execSync('django-admin makemessages -l traduz > /dev/null 2>&1');
+        execSync('django-admin makemessages -l traduz -i "lib/*" -i "bin/*" > /dev/null 2>&1');
         CliUx.ux.action.stop();
 
         CliUx.ux.action.start('searching for apps');
