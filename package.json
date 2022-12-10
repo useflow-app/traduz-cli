@@ -30,7 +30,7 @@
     "inquirer": "^8.2.5"
   },
   "devDependencies": {
-    "@oclif/test": "^2.2.2",
+    "@oclif/test": "^2.2.13",
     "@types/chai": "^4",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.11.63",
