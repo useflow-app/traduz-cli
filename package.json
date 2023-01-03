@@ -1,6 +1,6 @@
 {
   "name": "traduz-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI to handle strings translations",
   "author": "Eduardo Carneiro",
   "bin": {
@@ -32,6 +32,7 @@
   "devDependencies": {
     "@oclif/test": "^2.2.2",
     "@types/chai": "^4",
+    "@types/glob": "^8.0.0",
     "@types/mocha": "^9.0.0",
     "@types/node": "^16.11.63",
     "chai": "^4",

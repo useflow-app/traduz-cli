@@ -26,8 +26,18 @@ export default class ReactUpdate {
         files.forEach((element: string) => {
             let content = fs.readFileSync(element, 'utf-8');
             parser
-                .parseFuncFromString(content, {list: ['i18next.t', 'i18n.t', 't']})
-                .parseFuncFromString(content, {component: 'Trans', i18nKey: 'i18nKey'});
+                .parseFuncFromString(content, {list: ['i18next.t', 'i18n.t', 't']}, (key: string, options: any) => {
+                    parser.set(key, Object.assign({}, options, {
+                        nsSeparator: false,
+                        keySeparator: false
+                    }));
+                })
+                .parseFuncFromString(content, {component: 'Trans', i18nKey: 'i18nKey'}, (key: string, options: any) => {
+                    parser.set(key, Object.assign({}, options, {
+                        nsSeparator: false,
+                        keySeparator: false
+                    }));
+                });
         });
         const translation = parser.get().en.translation;
         Object.keys(translation).forEach((element: any) => {
