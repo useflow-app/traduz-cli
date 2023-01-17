@@ -10,6 +10,7 @@ CLI to handle strings translations
 [![License](https://img.shields.io/npm/l/oclif-hello-world.svg)](https://github.com/useflow-app/traduz-cli/blob/main/package.json)
 
 <!-- toc -->
+* [Installation](#installation)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
@@ -62,7 +63,7 @@ $ npm install -g traduz-cli
 $ traduz-cli COMMAND
 running command...
 $ traduz-cli (--version)
-traduz-cli/0.1.0 linux-x64 node-v14.17.6
+traduz-cli/0.1.2 linux-x64 node-v18.12.1
 $ traduz-cli --help [COMMAND]
 USAGE
   $ traduz-cli COMMAND
@@ -73,74 +74,42 @@ USAGE
 <!-- commands -->
 * [`traduz-cli setup`](#traduz-cli-setup)
 * [`traduz-cli update`](#traduz-cli-update)
-* [`traduz-cli --help [COMMAND]`](#traduz-cli---help-command)
 
 ## `traduz-cli setup`
 
-Setup i18n CLI
+setup i18n cli
 
 ```
 USAGE
   $ traduz-cli setup
 
 DESCRIPTION
-  Setup i18n CLI.
-  You must run this command before update.
-  The parameters are stored in the traduz-config.json file in the same path where this command is run.
+  setup i18n cli
 
 EXAMPLES
   $ traduz-cli setup
-  Let's setup this tool...
-  I18n Host: http://localhost:8000  # ms-i18n host
-  Application ID: 123456789         # ms-auth app id
-  Application Key: abcdefghi        # ms-auth app key
-  Translation path: i18n            # path to save translations
-  Translation filename: language    # default name of translation files
 ```
 
-_See code: [src/commands/setup.ts](https://github.com/useflow-app/traduz-cli/blob/main/src/commands/setup.ts)_
+_See code: [dist/commands/setup.ts](https://github.com/useflow-app/traduz-cli/blob/v0.1.2/dist/commands/setup.ts)_
 
 ## `traduz-cli update`
 
-Update supported languages
+update supported languages
 
 ```
 USAGE
-  $ traduz-cli update
-
-DESCRIPTION
-  Update supported languages and save in local storage.
-  You must run setup before this command.
+  $ traduz-cli update [-f] [-r]
 
 FLAGS
   -f, --force  force send all strings
   -r, --reset  reset local translations
 
+DESCRIPTION
+  update supported languages
+
 EXAMPLES
   $ traduz-cli update
-  parsing files *.js and *.jsx... done
-  sending new strings... done
-  retrieving languages available... done
-  retrieving language en... done
-  retrieving language es... done
-  retrieving language pt-br... done
-  retrieving language pt-pt... done
 ```
 
-_See code: [src/commands/update.ts](https://github.com/useflow-app/traduz-cli/blob/main/src/commands/update.ts)_
-
-## `traduz-cli --help [COMMAND]`
-
-Display help for traduz-cli.
-
-```
-USAGE
-  $ traduz-cli --help [COMMAND]
-
-ARGUMENTS
-  COMMAND  Command to show help for.
-
-DESCRIPTION
-  Display help for traduz-cli.
-```
+_See code: [dist/commands/update.ts](https://github.com/useflow-app/traduz-cli/blob/v0.1.2/dist/commands/update.ts)_
 <!-- commandsstop -->
