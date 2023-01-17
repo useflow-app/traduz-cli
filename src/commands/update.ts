@@ -2,6 +2,8 @@ import {Command, Flags, CliUx} from '@oclif/core';
 import {Config, ConfigField} from '../config';
 import ReactUpdate from '../stacks/react';
 import DjangoUpdate from '../stacks/django';
+import IosUpdate from '../stacks/ios';
+import AndroidUpdate from '../stacks/android';
 
 
 export default class Update extends Command {
@@ -21,11 +23,16 @@ export default class Update extends Command {
         const config = new Config();
 
         if (config.isValid()) {
-            const stack = config.get(ConfigField.stack);
-            if (stack === 'react') {
-                await new ReactUpdate().update(config, flags)
-            } else if (stack === 'django') {
-                await new DjangoUpdate().update(config, flags)
+            const mapStack: any = {
+                react: ReactUpdate,
+                django: DjangoUpdate,
+                ios: IosUpdate,
+                android: AndroidUpdate,
+            }
+            const stack: any = config.get(ConfigField.stack);
+            const stackClass = mapStack[stack];
+            if (stackClass) {
+                await new stackClass().update(config, flags)
             }
         } else {
             CliUx.ux.log('                //_____ __');
