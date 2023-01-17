@@ -28,7 +28,8 @@
     "conf": "^10.2.0",
     "i18n-strings-files": "^2.0.0",
     "i18next-scanner": "^4.0.0",
-    "inquirer": "^8.2.5"
+    "inquirer": "^8.2.5",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "@oclif/test": "^2.2.2",

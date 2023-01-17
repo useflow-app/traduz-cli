@@ -3,6 +3,7 @@ import {Config, ConfigField} from '../config';
 import ReactUpdate from '../stacks/react';
 import DjangoUpdate from '../stacks/django';
 import IosUpdate from '../stacks/ios';
+import AndroidUpdate from '../stacks/android';
 
 
 export default class Update extends Command {
@@ -25,7 +26,8 @@ export default class Update extends Command {
             const mapStack: any = {
                 react: ReactUpdate,
                 django: DjangoUpdate,
-                ios: IosUpdate
+                ios: IosUpdate,
+                android: AndroidUpdate,
             }
             const stack: any = config.get(ConfigField.stack);
             const stackClass = mapStack[stack];

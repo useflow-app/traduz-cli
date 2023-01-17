@@ -3,6 +3,7 @@ import {ConfigField, Config} from '../config';
 import {djangoConfig} from '../stacks/django';
 import {reactConfig} from '../stacks/react';
 import {iosConfig} from '../stacks/ios';
+import {androidConfig} from '../stacks/android';
 
 export default class Setup extends Command {
     static description = 'setup i18n cli';
@@ -14,11 +15,12 @@ export default class Setup extends Command {
     public async run(): Promise<void> {
         const config = new Config();
         const inquirer = require('inquirer');
-        const stacks = ['django', 'react', 'ios'];
+        const stacks = ['django', 'react', 'ios', 'android'];
         const stackConfig: any = {
             django: djangoConfig,
             react: reactConfig,
             ios: iosConfig,
+            android: androidConfig,
         };
         const selectedStack = config.get(ConfigField.stack, '');
         stacks.sort((x,y) => {
