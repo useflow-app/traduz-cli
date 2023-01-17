@@ -41,7 +41,7 @@ export async function iosConfig(config: Config) {
     if (!config.has(ConfigField.strings)) config.set(ConfigField.strings, {});
 }
 
-export default class ReactUpdate {
+export default class IosUpdate {
 
     private parserStep(config: Config, force: boolean): Dictionary<string> {
         const i18nStringsFiles = require('i18n-strings-files');
