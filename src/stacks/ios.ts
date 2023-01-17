@@ -1,7 +1,6 @@
 import {CliUx} from '@oclif/core';
 import {ConfigField, Config} from '../config';
 import * as fs from 'fs';
-import * as glob from 'glob';
 import { AxiosResponse } from 'axios'
 import * as stream from 'stream';
 import { promisify } from 'util';
@@ -12,7 +11,11 @@ type LangResponse = {
     code: string
 };
 
-export async function reactConfig(config: Config) {
+interface Dictionary<T> {
+    [Key: string]: T;
+}
+
+export async function iosConfig(config: Config) {
     const inquirer = require('inquirer');
 
     const questions = [
@@ -20,14 +23,14 @@ export async function reactConfig(config: Config) {
             type: 'input',
             name: 'trans_path',
             message: 'Translation path',
-            default: config.get(ConfigField.trans_path, 'public/locales'),
+            default: config.get(ConfigField.trans_path, 'Runner/Resources'),
             validate: config.validateRequired
         },
         {
             type: 'input',
             name: 'trans_filename',
             message: 'Translation filename (without extension)',
-            default: config.get(ConfigField.trans_filename, 'translation'),
+            default: config.get(ConfigField.trans_filename, 'Localizable'),
             validate: config.validateRequired
         }
     ];
@@ -35,83 +38,58 @@ export async function reactConfig(config: Config) {
     const reactResponses = await inquirer.prompt(questions);
     config.set(ConfigField.trans_path, reactResponses.trans_path);
     config.set(ConfigField.trans_filename, reactResponses.trans_filename);
-    if (!config.has(ConfigField.strings)) config.set(ConfigField.strings, []);
+    if (!config.has(ConfigField.strings)) config.set(ConfigField.strings, {});
 }
 
 export default class ReactUpdate {
 
-    private parserStep(config: Config, force: boolean): Array<string> {
-        const Parser = require('i18next-scanner').Parser;
+    private parserStep(config: Config, force: boolean): Dictionary<string> {
+        const i18nStringsFiles = require('i18n-strings-files');
 
-        CliUx.ux.action.start('parsing files *.js, *.jsx, *.ts and *.tsx');
-        const files: Array<string> = glob.sync('src/**/*.{js,jsx,ts,tsx}');
-        const parser = new Parser();
+        const path = `${config.get(ConfigField.trans_path)}`+
+            `/Base.lproj/${config.get(ConfigField.trans_filename)}.strings`;
+        CliUx.ux.action.start(`parsing file ${path}`);
 
-        const newStrings: Array<string> = [];
-        let strings: any = config.get(ConfigField.strings, []);
-        files.forEach((element: string) => {
-            let content = fs.readFileSync(element, 'utf-8');
-            parser
-                .parseFuncFromString(content, {list: ['i18next.t', 'i18n.t', 't']}, (key: string, options: any) => {
-                    parser.set(key, Object.assign({}, options, {
-                        nsSeparator: false,
-                        keySeparator: false
-                    }));
-                })
-                .parseFuncFromString(content, {component: 'Trans', i18nKey: 'i18nKey'}, (key: string, options: any) => {
-                    parser.set(key, Object.assign({}, options, {
-                        nsSeparator: false,
-                        keySeparator: false
-                    }));
-                });
-        });
-        const translation = parser.get().en.translation;
-        Object.keys(translation).forEach((element: any) => {
-            const t = typeof translation[element];
-            if (t === 'string' || (t === 'object' && element.constructor.name === 'String')) {
-                if (!strings.includes(element)) {
-                    strings.push(element);
-                    newStrings.push(element);
-                } else if (force && !newStrings.includes(element)) {
-                    newStrings.push(element);
+        const newStrings: Dictionary<string> = {};
+        let strings: Dictionary<string> = config.get(ConfigField.strings, {});
+        const data = i18nStringsFiles.readFileSync(path, 'UTF-8');
+        if (data) {
+            for (let key of Object.keys(data)) {
+                if (!Object.keys(strings).includes(key)) {
+                    strings[key] = data[key];
+                    newStrings[key] = data[key];
+                } else if (force && !Object.keys(newStrings).includes(key)) {
+                    newStrings[key] = data[key];
                 }
             }
-        });
+            config.set(ConfigField.strings, strings);
+        }
 
         CliUx.ux.action.stop();
         return newStrings;
     }
 
-    private prepareDataToSend(stringsToSend: Array<string>): Array<Object> {
+    private prepareDataToSend(stringsToSend: Dictionary<string>): Array<Object> {
         const data = [];
         const keys: any = [];
-        for (let str of stringsToSend) {
-            const key = str.replace('_plural', '');
-            const plural = str.endsWith('_plural')
+        for (let key of Object.keys(stringsToSend)) {
             if (!keys.includes(key)) {
                 data.push({
                     text: key,
-                    plural: plural,
+                    value: stringsToSend[key]
                 });
                 keys.push(key);
-            } else if (plural) {
-                for (let el of data) {
-                    if (el.text === key) {
-                        el.plural = plural;
-                        break;
-                    }
-                }
             }
         }
         return data;
     }
 
-    private async sendStep(config: Config, stringsToSend: Array<string>, force: boolean) {
+    private async sendStep(config: Config, stringsToSend: Dictionary<string>, force: boolean) {
         const axios = require('axios');
 
         CliUx.ux.action.start('sending new strings');
         await axios.post(
-            config.get(ConfigField.host) + '/api/v1/react/texts/',
+            config.get(ConfigField.host) + '/api/v1/ios/texts/',
             this.prepareDataToSend(stringsToSend),
             {
                 auth: {
@@ -120,8 +98,8 @@ export default class ReactUpdate {
                 },
             },
         ).then(async (response: any) => {
-            const strings = config.get(ConfigField.strings, []);
-            strings.push(...stringsToSend);
+            let strings = config.get(ConfigField.strings, {});
+            strings = Object.assign(strings, stringsToSend);
             config.set(ConfigField.strings, force ? stringsToSend : strings);
             CliUx.ux.action.stop();
         }).catch(function (error: any) {
@@ -132,20 +110,27 @@ export default class ReactUpdate {
     private async retrieveLangStep(config: Config, lang: LangResponse) {
         const axios = require('axios');
         const chalk = require('chalk');
+        let langCode = lang.code;
 
-        const dir = `${config.get(ConfigField.trans_path)}/${lang.code}`;
+        langCode = langCode.replace('_', '-');
+        const langParts = langCode.split('-');
+        if (langParts.length === 2) {
+            langCode = `${langParts[0].toLowerCase()}-${langParts[1].toUpperCase()}`;
+        }
+
+        const dir = `${config.get(ConfigField.trans_path)}/${lang.code}.lproj`;
         const filename = config.get(ConfigField.trans_filename);
 
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir, {recursive: true});
         }
 
-        const fsstream = fs.createWriteStream(`${dir}/${filename}.json`);
+        const fsstream = fs.createWriteStream(`${dir}/${filename}.strings`);
         const finished = promisify(stream.finished);
 
         CliUx.ux.action.start(`retrieving language ${chalk.bold(lang.code)}`)
         await axios.get(
-            config.get(ConfigField.host) + `/api/v1/react/langs/${lang.code}/`, {
+            config.get(ConfigField.host) + `/api/v1/ios/langs/${lang.code}/`, {
                 auth: {
                     username: config.get(ConfigField.app_id),
                     password: config.get(ConfigField.app_key)
@@ -173,7 +158,7 @@ export default class ReactUpdate {
             fs.rmSync(dir, {recursive: true, force: true});
         }
         await axios.get(
-            config.get(ConfigField.host) + '/api/v1/react/langs/', {
+            config.get(ConfigField.host) + '/api/v1/ios/langs/', {
                 auth: {
                     username: config.get(ConfigField.app_id),
                     password: config.get(ConfigField.app_key)
@@ -191,7 +176,7 @@ export default class ReactUpdate {
 
     public async update(config: Config, flags: any) {
         const newStrings = this.parserStep(config, flags.force);
-        if (newStrings.length > 0) {
+        if (Object.keys(newStrings).length > 0) {
             await this.sendStep(config, newStrings, flags.force);
         }
         const langs = await this.retrieveLangsStep(config, flags.reset);

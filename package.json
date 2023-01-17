@@ -26,6 +26,7 @@
     "@types/inquirer": "^9.0.2",
     "axios": "^1.1.2",
     "conf": "^10.2.0",
+    "i18n-strings-files": "^2.0.0",
     "i18next-scanner": "^4.0.0",
     "inquirer": "^8.2.5"
   },

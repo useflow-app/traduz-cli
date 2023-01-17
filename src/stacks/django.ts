@@ -14,6 +14,12 @@ type LangResponse = {
     code: string
 };
 
+export async function djangoConfig(config: Config) {
+    config.set(ConfigField.trans_path, '')
+    config.set(ConfigField.trans_filename, '');
+    if (!config.has(ConfigField.strings)) config.set(ConfigField.strings, {});
+}
+
 export default class DjangoUpdate {
 
     private checkIfCommandExists() {
