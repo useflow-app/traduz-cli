@@ -4,6 +4,7 @@ import ReactUpdate from '../stacks/react';
 import DjangoUpdate from '../stacks/django';
 import IosUpdate from '../stacks/ios';
 import AndroidUpdate from '../stacks/android';
+import JSUpdate from '../stacks/js';
 
 
 export default class Update extends Command {
@@ -28,6 +29,7 @@ export default class Update extends Command {
                 django: DjangoUpdate,
                 ios: IosUpdate,
                 android: AndroidUpdate,
+                js: JSUpdate,
             }
             const stack: any = config.get(ConfigField.stack);
             const stackClass = mapStack[stack];
