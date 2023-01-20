@@ -1,6 +1,6 @@
 {
   "name": "traduz-cli",
-  "version": "0.1.4",
+  "version": "v0.2.0",
   "description": "CLI to handle strings translations",
   "author": "Eduardo Carneiro",
   "bin": {

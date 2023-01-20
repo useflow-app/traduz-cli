@@ -63,7 +63,7 @@ $ npm install -g traduz-cli
 $ traduz-cli COMMAND
 running command...
 $ traduz-cli (--version)
-traduz-cli/0.1.4 linux-x64 node-v18.12.1
+traduz-cli/v0.2.0 linux-x64 node-v18.12.1
 $ traduz-cli --help [COMMAND]
 USAGE
   $ traduz-cli COMMAND
@@ -90,7 +90,7 @@ EXAMPLES
   $ traduz-cli setup
 ```
 
-_See code: [dist/commands/setup.ts](https://github.com/useflow-app/traduz-cli/blob/v0.1.4/dist/commands/setup.ts)_
+_See code: [dist/commands/setup.ts](https://github.com/useflow-app/traduz-cli/blob/vv0.2.0/dist/commands/setup.ts)_
 
 ## `traduz-cli update`
 
@@ -111,5 +111,5 @@ EXAMPLES
   $ traduz-cli update
 ```
 
-_See code: [dist/commands/update.ts](https://github.com/useflow-app/traduz-cli/blob/v0.1.4/dist/commands/update.ts)_
+_See code: [dist/commands/update.ts](https://github.com/useflow-app/traduz-cli/blob/vv0.2.0/dist/commands/update.ts)_
 <!-- commandsstop -->
