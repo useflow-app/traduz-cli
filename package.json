@@ -32,7 +32,7 @@
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
-    "@oclif/test": "^2.2.2",
+    "@oclif/test": "^2.3.7",
     "@types/chai": "^4",
     "@types/glob": "^8.0.0",
     "@types/mocha": "^9.0.0",
