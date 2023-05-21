@@ -42,8 +42,8 @@ export default class JSUpdate {
 
     private parserStep(config: Config, force: boolean): Array<string> {
         const Parser = require('i18next-scanner').Parser;
-        CliUx.ux.action.start('parsing files *.html');
-        const files: Array<string> = glob.sync('./**/*.html');
+        CliUx.ux.action.start('parsing files *.js and *.html');
+        const files: Array<string> = glob.sync('./**/*.{js,html}');
         const parser = new Parser();
 
         const newStrings: Array<string> = [];
@@ -51,6 +51,12 @@ export default class JSUpdate {
         files.forEach((element: string) => {
             let content = fs.readFileSync(element, 'utf-8');
             parser.parseAttrFromString(content, {list: ['data-i18n']}, (key: string) => {
+                parser.set(key, {
+                    nsSeparator: false,
+                    keySeparator: false
+                });
+            });
+            parser.parseFuncFromString(content, {list: ['i18next.t']}, (key: string) => {
                 parser.set(key, {
                     nsSeparator: false,
                     keySeparator: false
