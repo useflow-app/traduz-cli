@@ -182,7 +182,7 @@ export default class AndroidUpdate {
             langCode = `${langParts[0].toLowerCase()}-r${langParts[1].toUpperCase()}`;
         }
 
-        const dir = `${config.get(ConfigField.trans_path)}/values-${lang.code}`;
+        const dir = `${config.get(ConfigField.trans_path)}/values-${langCode}`;
         const filename = config.get(ConfigField.trans_filename);
 
         if (!fs.existsSync(dir)){
