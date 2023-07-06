@@ -5,6 +5,7 @@ import DjangoUpdate from '../stacks/django';
 import IosUpdate from '../stacks/ios';
 import AndroidUpdate from '../stacks/android';
 import JSUpdate from '../stacks/js';
+import FlutterUpdate from '../stacks/flutter';
 
 
 export default class Update extends Command {
@@ -30,6 +31,7 @@ export default class Update extends Command {
                 ios: IosUpdate,
                 android: AndroidUpdate,
                 js: JSUpdate,
+                flutter: FlutterUpdate,
             }
             const stack: any = config.get(ConfigField.stack);
             const stackClass = mapStack[stack];
